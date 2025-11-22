@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Room Surprise</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loading-screen">
+      <p class="loading-text">Loading your birthday surprise… 🎁</p>
+    </div>
+
+    <audio id="bg-music" preload="auto" src="assets/birthday-song.mp3"></audio>
+
+    <div id="birthday-pill">Happy Birthday, <span>My Love</span> 🎉</div>
+
+    <div id="scene-container" role="presentation" aria-hidden="true"></div>
+    <div id="scene-dim"></div>
+
+    <div id="message-overlay">
+      <div class="message-card">
+        <h2>For You 💛</h2>
+        <p id="message-text"></p>
+        <div class="message-controls">
+          <button id="prev-message" type="button">Back</button>
+          <span id="message-indicator"></span>
+          <button id="next-message" type="button">Next</button>
+        </div>
+        <button id="close-message" type="button">Close</button>
+      </div>
+    </div>
+
+    <div id="instruction-hints">
+      <p>Tap the gift 🎁 for a surprise</p>
+      <p>Tap the cake 🎂 to blow out the candles</p>
+    </div>
+
+    <div id="wish-text">Make a wish… ✨</div>
+
+    <button id="release-balloons" type="button">Release Balloons 🎈</button>
+    <button id="music-toggle" type="button">🔊</button>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

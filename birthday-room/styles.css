@@ -1,0 +1,326 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #0c0820, #02010b 60%, #010109);
+  color: #f8f5ff;
+  overflow: hidden;
+}
+
+#scene-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #040112, #120627, #05020f);
+  z-index: 30;
+  transition: opacity 0.6s ease;
+}
+
+#loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-text {
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+  font-size: 1.1rem;
+  text-align: center;
+  animation: pulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+
+#birthday-pill {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.45rem 1.4rem;
+  background: rgba(9, 7, 30, 0.6);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(18px);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.65);
+  z-index: 10;
+  opacity: 0;
+  animation: pillIntro 1.2s ease forwards 0.5s, pillGlow 4s ease-in-out infinite 1.8s;
+}
+
+#birthday-pill span {
+  font-weight: 600;
+}
+
+@keyframes pillIntro {
+  from {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes pillGlow {
+  0% {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 170, 255, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  }
+}
+
+#scene-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 2, 10, 0.65);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 15;
+}
+
+#scene-dim.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#message-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 25;
+}
+
+.message-card {
+  width: min(380px, 92vw);
+  background: rgba(18, 14, 40, 0.85);
+  border-radius: 18px;
+  padding: 1.6rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+  text-align: center;
+  color: #fefefe;
+  backdrop-filter: blur(20px);
+  transform: scale(0.85) translateY(10px);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.message-card.visible {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  animation: cardFloat 6s ease-in-out infinite alternate 0.5s;
+}
+
+@keyframes cardFloat {
+  from {
+    transform: scale(1) translateY(0);
+  }
+  to {
+    transform: scale(1.01) translateY(-4px);
+  }
+}
+
+.message-card h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.35rem;
+}
+
+.message-card p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.98rem;
+}
+
+.message-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+}
+
+.message-controls button {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#message-indicator {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+#close-message {
+  margin-top: 1.1rem;
+  padding: 0.45rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #1b0c2d;
+  background: linear-gradient(135deg, #ffd6e0, #f1b2ff);
+  box-shadow: 0 10px 25px rgba(241, 178, 255, 0.4);
+}
+
+#close-message:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+#instruction-hints {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+  opacity: 0;
+  animation: hintCycle 8s ease-in-out infinite 2s;
+  z-index: 10;
+}
+
+@keyframes hintCycle {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#wish-text {
+  position: fixed;
+  bottom: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffe9ff;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 11;
+}
+
+#wish-text.visible {
+  opacity: 1;
+}
+
+#release-balloons,
+#music-toggle {
+  position: fixed;
+  bottom: 16px;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(19, 10, 40, 0.7);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  z-index: 11;
+}
+
+#release-balloons {
+  right: 20px;
+}
+
+#music-toggle {
+  right: 20px;
+  bottom: 64px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+#release-balloons:active,
+#music-toggle:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 640px) {
+  #birthday-pill {
+    font-size: 0.85rem;
+    padding: 0.35rem 1rem;
+  }
+
+  .message-card {
+    padding: 1.3rem;
+  }
+
+  #release-balloons {
+    right: 12px;
+    font-size: 0.8rem;
+  }
+
+  #music-toggle {
+    right: 12px;
+  }
+}
+
